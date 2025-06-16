@@ -14,7 +14,7 @@ namespace JewelryStore.DAL.Models
         public DateTime OrderDate { get; set; }
 
         public Client Client { get; set; }
-        public Employee Employee { get; set; }
+        //public Employee Employee { get; set; }
         public Product Product { get; set; }
     }
 }

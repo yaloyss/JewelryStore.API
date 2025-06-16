@@ -12,7 +12,6 @@
     <None Remove="Repositories\" />
     <None Remove="Repositories\Interfaces\" />
     <None Remove="UOW\" />
-    <None Remove="Repositories\Interfaces\Controllers\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />
@@ -20,7 +19,6 @@
     <Folder Include="Repositories\" />
     <Folder Include="Repositories\Interfaces\" />
     <Folder Include="UOW\" />
-    <Folder Include="Repositories\Interfaces\Controllers\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.20">

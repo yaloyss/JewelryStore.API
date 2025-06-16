@@ -15,10 +15,10 @@ namespace JewelryStore.DAL.Repositories
             return await dbSet.Where(o => o.ClientId == clientId).ToListAsync();
         }
 
-        public async Task<IEnumerable<Order>> GetByEmployeeIdAsync(int employeeId)
-        {
-            return await dbSet.Where(o => o.EmployeeId == employeeId).ToListAsync();
-        }
+        //public async Task<IEnumerable<Order>> GetByEmployeeIdAsync(int employeeId)
+        //{
+        //    return await dbSet.Where(o => o.EmployeeId == employeeId).ToListAsync();
+        //}
 
         public async Task<IEnumerable<Order>> GetByProductIdAsync(int productId)
         {
@@ -36,8 +36,8 @@ namespace JewelryStore.DAL.Repositories
         {
             return await dbSet
                     .Include(o => o.Client)    
-                    .Include(o => o.Employee)              
-                        .ThenInclude(e => e.Position)    
+                    //.Include(o => o.Employee)              
+                        //.ThenInclude(e => e.Position)    
                     .Include(o => o.Product)                  
                     .ToListAsync();
 
@@ -56,9 +56,9 @@ namespace JewelryStore.DAL.Repositories
                         ClientLastName = o.Client.LastName,
                         ClientPhone = o.Client.PhoneNumber,
 
-                        EmployeeFirstName = o.Employee.FirstName,
-                        EmployeeLastName = o.Employee.LastName,
-                        EmployeePosition = o.Employee.Position.PositionName,
+                        //EmployeeFirstName = o.Employee.FirstName,
+                        //EmployeeLastName = o.Employee.LastName,
+                        //EmployeePosition = o.Employee.Position.PositionName,
 
                         ProductName = o.Product.Name,
                         ProductPrice = o.Product.Price

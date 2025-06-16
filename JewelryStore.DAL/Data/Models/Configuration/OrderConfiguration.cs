@@ -17,10 +17,10 @@ namespace JewelryStore.DAL.Models.Configuration
                 .HasForeignKey(o => o.ClientId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasOne(o => o.Employee)
-                .WithMany()
-                .HasForeignKey(o => o.EmployeeId)
-                .OnDelete(DeleteBehavior.Restrict);
+            //builder.HasOne(o => o.Employee)
+            //    .WithMany()
+            //    .HasForeignKey(o => o.EmployeeId)
+            //    .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasOne(o => o.Product)
                 .WithMany()
