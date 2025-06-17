@@ -9,4 +9,22 @@
   <ItemGroup>
     <ProjectReference Include="..\JewelryStore.DAL\JewelryStore.DAL.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <None Remove="DTOs\" />
+    <None Remove="DTOs\Product\" />
+    <None Remove="DTOs\Order\" />
+    <None Remove="DTOs\Client\" />
+    <None Remove="DTOs\Employee\" />
+    <None Remove="Services\" />
+    <None Remove="Services\Interfaces\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DTOs\" />
+    <Folder Include="DTOs\Product\" />
+    <Folder Include="DTOs\Order\" />
+    <Folder Include="DTOs\Client\" />
+    <Folder Include="DTOs\Employee\" />
+    <Folder Include="Services\" />
+    <Folder Include="Services\Interfaces\" />
+  </ItemGroup>
 </Project>
