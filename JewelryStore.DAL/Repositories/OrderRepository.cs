@@ -12,7 +12,7 @@ namespace JewelryStore.DAL.Repositories
 
         public async Task<IEnumerable<Order>> GetByClientIdAsync(int clientId)
         {
-            return await dbSet.Where(o => o.ClientId == clientId).ToListAsync();
+            return await dbSet.Where(o => o.ClientId == clientId).Include(o => o.Product).ToListAsync();
         }
 
         //public async Task<IEnumerable<Order>> GetByEmployeeIdAsync(int employeeId)

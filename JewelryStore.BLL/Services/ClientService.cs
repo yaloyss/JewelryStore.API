@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
 using JewelryStore.BLL.DTOs.Client;
+using JewelryStore.BLL.Services.Interfaces;
 using JewelryStore.DAL.UOW;
 
 namespace JewelryStore.BLL.Services
 {
-    public class ClientService
+    public class ClientService : IClientService
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;

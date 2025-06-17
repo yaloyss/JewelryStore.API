@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
 using JewelryStore.BLL.DTOs.Order;
+using JewelryStore.BLL.Services.Interfaces;
 using JewelryStore.DAL.Models;
 using JewelryStore.DAL.UOW;
 
 namespace JewelryStore.BLL.Services
 {
-    public class OrderService
+    public class OrderService : IOrderService
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
@@ -31,7 +32,8 @@ namespace JewelryStore.BLL.Services
             {
                 ProductId = orderDto.ProductId,
                 ClientId = orderDto.ClientId,
-                OrderDate = DateTime.Now
+                EmployeeId = 1, //temporary default value
+                OrderDate = DateTime.UtcNow
             };
 
             await unitOfWork.Orders.AddAsync(order);
