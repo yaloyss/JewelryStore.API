@@ -1,7 +1,6 @@
-﻿using JewelryStore.BLL.DTOs.Client;
+﻿using AutoMapper;
 using JewelryStore.BLL.DTOs.Order;
 using JewelryStore.DAL.Models;
-using JewelryStore.DAL.Repositories.Interfaces;
 using JewelryStore.DAL.UOW;
 
 namespace JewelryStore.BLL.Services
@@ -9,10 +8,12 @@ namespace JewelryStore.BLL.Services
     public class OrderService
     {
         private readonly IUnitOfWork unitOfWork;
+        private readonly IMapper mapper;
 
-        public OrderService(IUnitOfWork unitOfWork)
+        public OrderService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             this.unitOfWork = unitOfWork;
+            this.mapper = mapper;
         }
 
         public async Task<OrderCreatedResponseDTO> CreateOrderAsync(OrderCreateDTO orderDto)
@@ -50,34 +51,13 @@ namespace JewelryStore.BLL.Services
         public async Task<IEnumerable<ClientOrderHistoryDTO>> GetClientOrderHistoryAsync(int clientId)
         {
             var orders = await unitOfWork.Orders.GetByClientIdAsync(clientId);
-
-            return orders.Select(o => new ClientOrderHistoryDTO
-            {
-                OrderId = o.OrderId,
-                OrderDate = o.OrderDate,
-                ProductName = o.Product.Name,
-                ProductPrice = o.Product.Price
-            });
+            return mapper.Map<IEnumerable<ClientOrderHistoryDTO>>(orders);
         }
 
         public async Task<IEnumerable<AdminOrderHistoryDTO>> GetAllOrdersHistoryAsync()
         {
             var orders = await unitOfWork.Orders.GetWithDetailsAsync();
-
-            return orders.Select(o => new AdminOrderHistoryDTO
-            {
-                OrderId = o.OrderId,
-                OrderDate = o.OrderDate,
-                ProductName = o.Product.Name,
-                ProductPrice = o.Product.Price,
-                Client = new ClientSummaryDTO
-                {
-                    ClientId = o.Client.ClientId,
-                    FirstName = o.Client.FirstName,
-                    LastName = o.Client.LastName,
-                    PhoneNumber = o.Client.PhoneNumber
-                }
-            });
+            return mapper.Map<IEnumerable<AdminOrderHistoryDTO>>(orders);
         }
     }
 }

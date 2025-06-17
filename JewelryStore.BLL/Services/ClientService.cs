@@ -1,4 +1,5 @@
-﻿using JewelryStore.BLL.DTOs.Client;
+﻿using AutoMapper;
+using JewelryStore.BLL.DTOs.Client;
 using JewelryStore.DAL.UOW;
 
 namespace JewelryStore.BLL.Services
@@ -6,39 +7,24 @@ namespace JewelryStore.BLL.Services
     public class ClientService
     {
         private readonly IUnitOfWork unitOfWork;
+        private readonly IMapper mapper;
 
-        public ClientService(IUnitOfWork unitOfWork)
+        public ClientService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             this.unitOfWork = unitOfWork;
+            this.mapper = mapper;
         }
 
         public async Task<ClientSummaryDTO?> GetClientByIdAsync(int clientId)
         {
             var client = await unitOfWork.Clients.GetByIdAsync(clientId);
-
-            if (client == null)
-                return null;
-
-            return new ClientSummaryDTO
-            {
-                ClientId = client.ClientId,
-                FirstName = client.FirstName,
-                LastName = client.LastName,
-                PhoneNumber = client.PhoneNumber
-            };
+            return client == null ? null : mapper.Map<ClientSummaryDTO>(client);
         }
 
         public async Task<IEnumerable<ClientSummaryDTO>> GetAllClientsAsync()
         {
             var clients = await unitOfWork.Clients.GetAllAsync();
-
-            return clients.Select(c => new ClientSummaryDTO
-            {
-                ClientId = c.ClientId,
-                FirstName = c.FirstName,
-                LastName = c.LastName,
-                PhoneNumber = c.PhoneNumber
-            });
+            return mapper.Map<IEnumerable<ClientSummaryDTO>>(clients);
         }
     }
 }
