@@ -20,11 +20,6 @@ namespace JewelryStore.API.Controllers
         {
             try
             {
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                }
-
                 var createdOrder = await orderService.CreateOrderAsync(orderDto);
                 return CreatedAtAction(nameof(GetClientOrderHistory), new { clientId = orderDto.ClientId }, createdOrder);
             }

@@ -1,5 +1,6 @@
 ﻿using JewelryStore.BLL.DTOs.Product;
 using JewelryStore.BLL.Services.Interfaces;
+using JewelryStore.DAL.Pagination;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JewelryStore.API.Controllers
@@ -15,17 +16,31 @@ namespace JewelryStore.API.Controllers
             this.productService = productService;
         }
 
-        [HttpGet("shortened view")]
-        public async Task<ActionResult<IEnumerable<ProductListViewDTO>>> GetAllProducts()
+        [HttpGet("shortened details view")]
+        public async Task<ActionResult<PagedResult<ProductListViewDTO>>> GetAllProducts([FromQuery] PagedRequest request)
         {
             try
             {
-                var products = await productService.GetAllProductsAsync();
+                var products = await productService.GetAllProductsAsync(request);
                 return Ok(products);
             }
             catch (Exception ex)
             {
                 return StatusCode(500, $"Error while getting products list: {ex.Message}");
+            }
+        }
+
+        [HttpGet("filtering and sorting")]
+        public async Task<ActionResult<PagedResult<ProductDetailedViewDTO>>> SearchProducts([FromQuery] ProductSearchRequest request)
+        {
+            try
+            {
+                var products = await productService.FilterProductsAsync(request);
+                return Ok(products);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error while searching products: {ex.Message}");
             }
         }
 
@@ -59,11 +74,6 @@ namespace JewelryStore.API.Controllers
         {
             try
             {
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                }
-
                 var createdProduct = await productService.CreateProductAsync(productDto);
                 return CreatedAtAction(nameof(GetProductById), new { id = createdProduct.ProductId }, createdProduct);
             }
@@ -78,16 +88,6 @@ namespace JewelryStore.API.Controllers
         {
             try
             {
-                if (id <= 0)
-                {
-                    return BadRequest("Product ID must be greater than zero.");
-                }
-
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                }
-
                 var updatedProduct = await productService.UpdateProductAsync(id, productDto);
 
                 if (updatedProduct == null)
