@@ -21,6 +21,7 @@
     <None Remove="Validation\" />
     <None Remove="Validation\Product\" />
     <None Remove="Validation\Order\" />
+    <None Remove="DTOs\Authentication\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DTOs\" />
@@ -34,11 +35,13 @@
     <Folder Include="Validation\" />
     <Folder Include="Validation\Product\" />
     <Folder Include="Validation\Order\" />
+    <Folder Include="DTOs\Authentication\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
     <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="FluentValidation" Version="11.5.1" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.12.0" />
   </ItemGroup>
 </Project>
