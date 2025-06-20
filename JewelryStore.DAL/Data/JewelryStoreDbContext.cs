@@ -1,8 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using JewelryStore.DAL.Models;
 using JewelryStore.DAL.Models.Configuration;
+using JewelryStore.DAL.Data.Models;
+using JewelryStore.DAL.Data.Models.Configuration;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
-public class JewelryStoreDbContext : DbContext
+public class JewelryStoreDbContext : IdentityDbContext<User>
 {
     public JewelryStoreDbContext(DbContextOptions<JewelryStoreDbContext> options)
         : base(options) { }
@@ -12,16 +15,20 @@ public class JewelryStoreDbContext : DbContext
     public DbSet<Client> Clients { get; set; }
     public DbSet<Product> Products { get; set; }
     public DbSet<Order> Orders { get; set; }
+    public DbSet<User> Users { get; set; }
+    public DbSet<RefreshToken> RefreshTokens { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
+
         modelBuilder.ApplyConfiguration(new PositionConfiguration());
         modelBuilder.ApplyConfiguration(new EmployeeConfiguration());
         modelBuilder.ApplyConfiguration(new ClientConfiguration());
         modelBuilder.ApplyConfiguration(new ProductConfiguration());
         modelBuilder.ApplyConfiguration(new OrderConfiguration());
-
-        base.OnModelCreating(modelBuilder);
+        modelBuilder.ApplyConfiguration(new UserConfiguration());
+        modelBuilder.ApplyConfiguration(new RefreshTokenConfiguration());
 
         modelBuilder.Entity<Product>().HasData(
             new Product { ProductId = 1, Name = "Silver stud earrings with pink cubic zirconium", Weight = 3, Metal = "Silver", Stone = "Pink cub. zirconium", Price = 2146, Manufacturer = "Ukraine" },
